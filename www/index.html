@@ -1,0 +1,259 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Laura and Cat</title>
+
+<!-- Welcome to ZIM at http://zimjs.com - Code Interactive Media Pizzazz!           -->
+<!-- ZIM runs on the HTML Canvas powered by JavaScript and CreateJS http://createjs.com -->
+<!-- Founded by Inventor Dan Zen - http://danzen.com - Canadian New Media Award Winner  -->
+<!-- ZIM is free to use. You can donate to help improve ZIM at http://zimjs.com/donate  -->
+
+<script src="js/createjs_1.1_min.js"></script>
+<script>
+    var zon = true; // set to false to turn off console messages from zim
+    var zns = false; // set to true to require zim namespace - eg. new zim.Frame()
+</script>
+<script src="js/zim_6.9.0.js"></script>
+<!-- use zimjs.com/distill for minified individual functions! -->
+
+<style>
+    @font-face {
+            font-family: Gugi;
+            src: url(assets/fonts/Gugi-Regular.ttf);
+        }
+</style>
+
+<script>
+
+// SCALING OPTIONS
+// scaling can have values as follows with full being the default
+// "fit"    sets canvas and stage to dimensions and scales to fit inside window size
+// "outside"    sets canvas and stage to dimensions and scales to fit outside window size
+// "full"   sets stage to window size with no scaling
+// "tagID"  add canvas to HTML tag of ID - set to dimensions if provided - no scaling
+
+
+// as of ZIM 5.5.0 you do not need to put zim before ZIM functions and classes
+var frame = new Frame();
+frame.on("ready", function() {
+    zog("ready from ZIM Frame"); // logs in console (F12 - choose console)
+
+    var stage = frame.stage;
+    var stageW = frame.width;
+    var stageH = frame.height;
+
+    frame.color = "#ddd";
+
+//     var waiter = new Waiter(stage);
+// waiter.show(); 
+
+  frame.loadAssets(['ball.png','cards.png','cat.png','clock.png','coin.png','cube.png','dice.png','forest.png','girl.png','lizzard.png','main.png','rock.png','sea.png','tree.png','BeepBox-Song.wav','sound.png','mute.png'], "assets/");
+  
+frame.on("complete", function(){
+     // waiter.hide();
+
+var music =frame.asset("BeepBox-Song.wav").play({loop:-1, volume:.5});
+var manager = new LayoutManager();
+
+ game();
+// intro();
+// var manager = new LayoutManager();
+
+function intro() { 
+
+var screenCont= new Container();
+var introScreen = new Container(stageW,stageH).addTo(stage);
+
+
+var bg= frame.asset('main.png').center(introScreen);
+var title= new Label({
+   text:"Laura & Cat",
+   size:65,
+   font:"Gugi",
+   color:"white",
+   rollColor:"red"
+}).center(introScreen)
+.mov(0,-25);
+
+
+
+var start_label= new Label({
+            text: "start",
+            size:25,
+            color:"white",
+            font:"Gugi",
+            fontOptions:"bold"
+        });
+
+
+ var start_btn=new Button({
+            label:start_label,
+            width:115,
+            height:75,
+            color:"#FF5733",
+            rollColor:"darkorange",
+            corner:35
+        })
+    .center(introScreen)
+    .mov(0,100);
+
+
+ var layoutIntro= new Layout(stage,
+            [
+                {object:introScreen},
+            ], null,null, false, new Shape(), stage
+        );
+
+ start_btn.on("click", function(e){
+            console.log("translation");
+            introScreen .removeFrom(stage);
+            stage.update();
+            game();
+        });
+
+ // frame.on("resize", function() {
+       
+ //      introScreen.resize();
+ //      stage.update();
+ //    });
+
+}// end of intro()
+
+
+
+
+ //game();
+function game() {
+
+//~~~~~Page1
+        var page1= new Container();
+
+        var contentPage1= new Container(stageW,stageW).addTo(page1);
+        var ball=frame.asset('ball.png').sca(0.5);
+            ball.addTo(contentPage1).pos(200,200);
+           // ball.outline();
+        var bg_game= frame.asset('main.png').center(contentPage1);
+        var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).pos(610, 317);
+
+        // var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).place("rock");
+
+        var circle= new Circle(50, "red").addTo(contentPage1).pos(330, 300).drag();
+       
+//~~~Page 2
+         // layout.removeShape();
+        var page2= new Container().addTo(stage);
+        var rect2= new Rectangle(stageW, stageH, frame.blue).addTo(page2);
+
+
+        var pages= new Pages({
+           pages:[
+            // imagine pages to the left, right, up and down
+                {page:page1, swipe:[null,page2,null,null]},
+                {page:page2, swipe:[page1,null,null,null]}
+            ], transition:"slide",speed:500
+
+        }); //this is a class
+        stage.addChild(pages);
+
+//~~~~Stage objects
+        var button = new Button({
+                label:"",
+                width:100,
+                height:100,
+                toggle:frame.asset('sound.png'),
+                backing:frame.asset('mute.png')
+            })
+                .sca(0.3);
+            button
+                .addTo(stage)
+                .pos(2,2);
+            button.on("click", function(){
+                music.muted=button.toggled;
+                console.log("click");
+            }); // end of button
+
+        // var objContainer= new Container(500,500).center(stage);
+        var objContainer= new Container(500,500).center(stage);
+        var objHolder= new Rectangle({
+                width:300,
+                height:80, 
+                color:"#C26561", 
+                corner:20})
+            .center(objContainer)
+            .mov(0,130);
+
+        var itemHold1= new Rectangle({
+                width:50,
+                height:50, 
+                color:"#F5DAD9", 
+                corner:10})
+            .center(objContainer)
+            .mov(0,130);
+
+        var itemHold2=itemHold1.clone()
+            .center(objContainer)
+            .mov(90,130);
+
+         var itemHold3=itemHold1.clone()
+            .center(objContainer)
+            .mov(-90,130);
+
+
+        var layout= new Layout(page1,
+            [
+                {object:contentPage1, width:50,marginLeft:5},
+            ], null,frame.color, false, new Shape(), stage
+        ); // for content on page1
+
+         var layoutStage= new Layout(stage,
+            [
+                {object:button, width:3},
+                 {object:objContainer,  marginTop:10, align:"center", width:50, valign:"bottom"}
+            ], null,null, false, new Shape(), stage
+        ); // for button
+
+        
+        manager.add(layout);
+        manager.add(layoutStage);
+        // manager.add(layoutIntro);
+
+
+
+
+        frame.on("resize", function() {
+           manager.resize();
+           pages.resize();
+           stage.update();
+          // introScreen.resize();
+        });
+
+    }// end of game()
+
+
+// manager.add(introScreen);
+// frame.on("resize", function() {
+//            manager.resize();
+//            stage.update();
+//           // introScreen.resize();
+//         });
+
+
+
+    stage.update(); //of frame complete
+});// end of frame complete
+
+    stage.update(); // this is needed to show any changes
+
+}); // end of ready
+
+</script>
+
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+
+</head>
+
+<body>
+<!-- canvas with id="myCanvas" is made by zim Frame -->
+</body>
+</html>
