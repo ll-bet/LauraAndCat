@@ -81,7 +81,7 @@
         <splash src="splash/landscape/android/landscape-mdpi.png" width="480" height="320" qualifier="port-mdpi" />
         <splash src="splash/landscape/android/landscape-hdpi.png" width="800" height="480" qualifier="port-hdpi" />
         <splash src="splash/landscape/android/landscape-xhdpi.png" width="1280" height="720" qualifier="port-xhdpi" />
-        <splash src="splash/landscape/android/landscape-xxhdpi.png" width="1600" height="960" qualifier="port-xxhdpi" />
+      <!--   <splash src="splash/landscape/android/landscape-xxhdpi.png" width="1600" height="960" qualifier="port-xxhdpi" /> -->
         <splash src="splash/landscape/android/landscape-xxhdpi.png" width="1920" height="1280" qualifier="port-xxxhdpi" />
     </platform>
 
