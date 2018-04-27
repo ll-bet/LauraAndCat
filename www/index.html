@@ -65,7 +65,9 @@ var forest=frame.asset('forest.png');
 var clock=frame.asset('clock.png');
 var girl=frame.asset('girl.png');
 
+//~~ score
 
+var score=0;
 
 var music =frame.asset("BeepBox-Song.wav").play({loop:-1, volume:.5});
 var manager = new LayoutManager();
@@ -147,8 +149,9 @@ function game() {
         var page1= new Container().addTo(stage);
 
         var contentPage1= new Container(stageW,stageH).addTo(page1);
-       ball.sca(0.5);
-            ball.addTo(contentPage1).pos(200,200);
+      
+        
+        ball.addTo(contentPage1).sca(0.3).pos(200,500).outline();
            // ball.outline();
         var bg_game= frame.asset('main.png').center(contentPage1);
         var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).pos(610, 317);
@@ -168,13 +171,19 @@ function game() {
         var bg_sea= frame.asset('sea.png').center(page2);
 
 
+//~~~~Page 3
+
+        var page3= new Container().addTo(stage);
+        var bg_forest= frame.asset('forest.png').center(page3);
 
 //~~~Pages together
         var pages= new Pages({
            pages:[
             // imagine pages to the left, right, up and down
-                {page:page1, swipe:[null,page2,null,null]},
-                {page:page2, swipe:[page1,null,null,null]}
+      // swipe:["to page on left", "to page on right", etc.s]
+                {page:page1, swipe:[page3,page2,null,null]},
+                {page:page2, swipe:[page1,null,null,null]},
+                {page:page3, swipe:[null,page1,null,null]}
             ], transition:"slide",speed:500
 
         }); //this is a class
@@ -281,8 +290,15 @@ function game() {
               // responseLabel.removeFrom(stage);
               // responseText="you found an item"
               //response();
-              stage.update();
            }
+
+           if (circle.hitTestBounds(rectHit)) {
+
+            score++;
+              console.log(score);
+              circle.removeFrom(contentPage1);
+          }
+            stage.update();
         });// works
 
 
