@@ -57,7 +57,7 @@ var music =frame.asset("BeepBox-Song.wav").play({loop:-1, volume:.5});
 var manager = new LayoutManager();
 var responseLabel;
 var responseText;
-
+var button;
 
  game();
 // intro();
@@ -141,7 +141,7 @@ function game() {
 
         // var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).place("rock");
 
-        var circle= new Circle(50, "red").addTo(contentPage1).pos(330, 300).drag();
+        var circle= new Circle(150, "red").addTo(contentPage1).pos(330, 300).drag();
 
 
 //~~~Page 2
@@ -166,7 +166,7 @@ function game() {
         stage.addChild(pages);
 
 //~~~~Stage objects
-        var button = new Button({
+        button = new Button({
                 label:"",
                 width:100,
                 height:100,
@@ -231,32 +231,38 @@ function game() {
         //    corner:0
         // }).center(intrHold);
 
-
+// var rectHit=new Rectangle(50,50, "orange").addTo(contentPage1).pos(200, 700).drag();
 
      circle.on("pressmove", function() {
            if (circle.hitTestBounds(itemHold1)) {
               console.log("hit");
-              // circle.x=objHolder.x;
-              // circle.y=objHolder.y;
+              circle.addTo(stage);
+             // circle.mov(10,10);
+
+              // circle.x=itemHold1.x;
+              // circle.y=itemHold1.y;
               // stage.update();
               // responseLabel.removeFrom(stage);
-              responseText="you found an item"
-              response();
+              // responseText="you found an item"
+              //response();
+              stage.update();
            }
         });// works
 
 
-function response(){
+// function response(){
 
-    responseLabel= new Label({
-            text: responseText,
-            size:100,
-            color:"black",
-            font:"Gugi"
-        }).center(stage);
-    stage.update();
 
-}// enf of response
+
+//     // responseLabel= new Label({
+//     //         text: responseText,
+//     //         size:100,
+//     //         color:"black",
+//     //         font:"Gugi"
+//     //     }).center(stage);
+//     stage.update();
+
+// }// enf of response
 
 //var rectTest= new Rectangle(100,100).addTo(stage);
 //~~~ Layout
