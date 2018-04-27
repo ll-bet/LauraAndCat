@@ -266,49 +266,25 @@ function game() {
 
 
      circle.on("pressmove", function() {
-           if (circle.hitTestBounds(itemHold1)) {
+           if (circle.parent!=stage && circle.hitTestBounds(itemHold1)) {
               console.log("hit");
               circle.addTo(stage);
                 circle.mov(10,10);
-            }else{
-                circle.addTo(contentPage1);
+            }else if(circle.parent==stage && !circle.hitTestBounds(itemHold1)){
+                circle.addTo(pages.page);
 
-                // if (circle.hit){
-                //     circle.x=circle.x;
-                //     circle.y=circle.y;
-                // }else{
-                //     circle.addTo(contentPage1);
-                // }
+            }
 
-            //         if(!circle.hit){
-            //             circle.hit=true;
-            //             circle.addTo(contentPage1);
-            //             // circle.mov(10,10);
-            //         } 
             // }else{
-                    // if(circle.hit){
-                    //     circle.hit=false;
-                    //     circle.addTo(stage);
-                    //     circle.mov(10,10);
-                    // } 
-
-              // circle.x=itemHold1.x;
-              // circle.y=itemHold1.y;
-              // stage.update();
-              // responseLabel.removeFrom(stage);
-              // responseText="you found an item"
-              //response();
-           }
-
-           if (circle.hitTestBounds(rectHit)) {
-                itemCheck();
-            // score++;
-            //   console.log(score);
-            //   circle.removeFrom(contentPage1);
-          }
+            //     circle.addTo(contentPage1);
+            
             stage.update();
         });// works
 
+ // circle.on("pressup", function(e) {
+ //    e.target.addTo(pages.page);
+
+ // });
 
 function itemCheck(){
 
