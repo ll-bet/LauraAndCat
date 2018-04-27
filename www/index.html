@@ -52,6 +52,20 @@ frame.on("ready", function() {
   
 frame.on("complete", function(){
      // waiter.hide();
+//~~~ Images
+var ball=frame.asset('ball.png');
+var cards=frame.asset('cards.png');
+var cat=frame.asset('cat.png');
+var coin=frame.asset('coin.png');
+var cube=frame.asset('cube.png');
+var dice=frame.asset('cube.png');
+var lizzard=frame.asset('lizzard.png');
+var tree=frame.asset('tree.png');
+var forest=frame.asset('forest.png');
+var clock=frame.asset('clock.png');
+var girl=frame.asset('girl.png');
+
+
 
 var music =frame.asset("BeepBox-Song.wav").play({loop:-1, volume:.5});
 var manager = new LayoutManager();
@@ -59,8 +73,8 @@ var responseLabel;
 var responseText;
 var button;
 
- game();
-// intro();
+// game();
+intro();
 // var manager = new LayoutManager();
 
 function intro() { 
@@ -133,7 +147,7 @@ function game() {
         var page1= new Container().addTo(stage);
 
         var contentPage1= new Container(stageW,stageH).addTo(page1);
-        var ball=frame.asset('ball.png').sca(0.5);
+       ball.sca(0.5);
             ball.addTo(contentPage1).pos(200,200);
            // ball.outline();
         var bg_game= frame.asset('main.png').center(contentPage1);
@@ -141,8 +155,9 @@ function game() {
 
         // var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).place("rock");
 
-        var circle= new Circle(150, "red").addTo(contentPage1).pos(330, 300).drag();
+        var circle= new Circle(50, "red").addTo(contentPage1).pos(330, 300).drag();
 
+        var rectHit=new Rectangle(50,50, "blue").addTo(contentPage1).pos(200, 700);
 
 //~~~Page 2
          // layout.removeShape();
@@ -231,13 +246,34 @@ function game() {
         //    corner:0
         // }).center(intrHold);
 
-// var rectHit=new Rectangle(50,50, "orange").addTo(contentPage1).pos(200, 700).drag();
+
 
      circle.on("pressmove", function() {
            if (circle.hitTestBounds(itemHold1)) {
               console.log("hit");
               circle.addTo(stage);
-             // circle.mov(10,10);
+                circle.mov(10,10);
+            }else{
+                circle.addTo(contentPage1);
+
+                // if (circle.hit){
+                //     circle.x=circle.x;
+                //     circle.y=circle.y;
+                // }else{
+                //     circle.addTo(contentPage1);
+                // }
+
+            //         if(!circle.hit){
+            //             circle.hit=true;
+            //             circle.addTo(contentPage1);
+            //             // circle.mov(10,10);
+            //         } 
+            // }else{
+                    // if(circle.hit){
+                    //     circle.hit=false;
+                    //     circle.addTo(stage);
+                    //     circle.mov(10,10);
+                    // } 
 
               // circle.x=itemHold1.x;
               // circle.y=itemHold1.y;
