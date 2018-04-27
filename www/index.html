@@ -150,6 +150,11 @@ function game() {
         var rect2= new Rectangle(stageW, stageH, frame.blue).addTo(page2);
 
 
+        var bg_sea= frame.asset('sea.png').center(page2);
+
+
+
+//~~~Pages together
         var pages= new Pages({
            pages:[
             // imagine pages to the left, right, up and down
@@ -234,6 +239,7 @@ function game() {
               // circle.x=objHolder.x;
               // circle.y=objHolder.y;
               // stage.update();
+              // responseLabel.removeFrom(stage);
               responseText="you found an item"
               response();
            }
@@ -246,12 +252,11 @@ function response(){
             text: responseText,
             size:100,
             color:"black",
-            font:"Gugi",
-            fontOptions:"bold"
+            font:"Gugi"
         }).center(stage);
     stage.update();
 
-}
+}// enf of response
 
 //~~~ Layout
 //(holder, regions, lastMargin, backgroundColor, vertical, regionShape, scalingObject, hideKey)
@@ -271,7 +276,7 @@ function response(){
           var layoutStage= new Layout(stage,
             [
                 {object:button, width:3, valign:"top"},
-                {object:objContainer, marginTop:6, width:15,valign:"bottom"}
+                {object:objContainer, marginTop:6, width:30, align:"center",valign:"bottom"}
             ], null,null, false, new Shape(), stage
         ); // for button & container
 
