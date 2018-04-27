@@ -258,13 +258,16 @@ function response(){
 
 }// enf of response
 
+//var rectTest= new Rectangle(100,100).addTo(stage);
 //~~~ Layout
 //(holder, regions, lastMargin, backgroundColor, vertical, regionShape, scalingObject, hideKey)
-        var layout= new Layout(page1,
-            [
-                {object:contentPage1,  maxWidth:100, minHeight:10,marginLeft:5},
-            ], null,frame.color, false, new Shape(), stage
-        ); // for content on page1
+        // var layout= new Layout(page1,
+        //     [
+        //         {object:contentPage1,  maxWidth:100, minHeight:10,marginLeft:5},
+        //     ], null,frame.color, false, new Shape(), stage
+        // ); // for content on page1
+
+
 
         //  var layoutStage= new Layout(stage,
         //     [
@@ -276,12 +279,13 @@ function response(){
           var layoutStage= new Layout(stage,
             [
                 {object:button, width:3, valign:"top"},
-                {object:objContainer, marginTop:6, width:30, align:"center",valign:"bottom"}
-            ], null,null, false, new Shape(), stage
+                {object:objContainer, marginLeft:33, width:30, align:"center",valign:"bottom"}
+                //{object:rectTest, marginLeft:0, width:30, align:"center",valign:"bottom"}
+            ], 33,null, false, new Shape(), stage
         ); // for button & container
 
         
-        manager.add(layout);
+        // manager.add(layout);
         manager.add(layoutStage);
         // manager.add(layoutIntro);
 
@@ -294,7 +298,7 @@ function response(){
            stage.update();
           // introScreen.resize();
         });
-
+stage.update(); //of frame complete
     }// end of game()
 
 
