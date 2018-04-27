@@ -71,6 +71,7 @@
     -->
 
     <!-- Define app icon for each platform. -->
+     <splash src="splash.png" width="320" height="480" />
     <platform name="ios">
         <splash src="splash/landscape/ios/Default-Landscape-736h@3x.png" width="2208" height="1242" />
         <splash src="splash/landscape/ios/Default-Landscape.png" width="1024" height="768" />
