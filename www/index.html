@@ -127,7 +127,7 @@ var start_label= new Label({
 function game() {
 
 //~~~~~Page1
-        var page1= new Container();
+        var page1= new Container().addTo(stage);;
 
         var contentPage1= new Container(stageW,stageW).addTo(page1);
         var ball=frame.asset('ball.png').sca(0.5);
@@ -139,7 +139,8 @@ function game() {
         // var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).place("rock");
 
         var circle= new Circle(50, "red").addTo(contentPage1).pos(330, 300).drag();
-       
+
+
 //~~~Page 2
          // layout.removeShape();
         var page2= new Container().addTo(stage);
@@ -174,7 +175,7 @@ function game() {
             }); // end of button
 
         // var objContainer= new Container(500,500).center(stage);
-        var objContainer= new Container(500,500).center(stage);
+        var objContainer= new Container(stageW,stageH).center(stage);
         var objHolder= new Rectangle({
                 width:300,
                 height:80, 
@@ -200,9 +201,22 @@ function game() {
             .mov(-90,130);
 
 
+
+     circle.on("pressmove", function() {
+           if (circle.hitTestBounds(itemHold1)) {
+              console.log("hit");
+              // circle.x=objHolder.x;
+              // circle.y=objHolder.y;
+              stage.update();
+           }
+        });
+
+
+//~~~ Layout
+
         var layout= new Layout(page1,
             [
-                {object:contentPage1, width:50,marginLeft:5},
+                {object:contentPage1,  maxWidth:80, minHeight:10,marginLeft:5},
             ], null,frame.color, false, new Shape(), stage
         ); // for content on page1
 
