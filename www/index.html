@@ -55,6 +55,7 @@ frame.on("complete", function(){
 
 var music =frame.asset("BeepBox-Song.wav").play({loop:-1, volume:.5});
 var manager = new LayoutManager();
+var responseLabel;
 
  game();
 // intro();
@@ -174,7 +175,10 @@ function game() {
                 console.log("click");
             }); // end of button
 
-        var objContainer= new Container(500,500).center(stage);
+        var contW=250;
+        var contH=80;
+
+        var objContainer= new Container(contW,contH).center(stage);
         // var objContainer= new Container(500,500).centerReg(stage).outline();
 
         var objHolder= new Rectangle({
@@ -227,16 +231,30 @@ function game() {
               console.log("hit");
               // circle.x=objHolder.x;
               // circle.y=objHolder.y;
-              stage.update();
+              // stage.update();
+              response();
            }
         });// works
 
+
+function response(){
+
+    responseLabel= new Label({
+            text: "start",
+            size:25,
+            color:"white",
+            font:"Gugi",
+            fontOptions:"bold"
+        }).addTo(stage);
+    stage.update();
+
+}
 
 //~~~ Layout
 //(holder, regions, lastMargin, backgroundColor, vertical, regionShape, scalingObject, hideKey)
         var layout= new Layout(page1,
             [
-                {object:contentPage1,  maxWidth:80, minHeight:10,marginLeft:5},
+                {object:contentPage1,  maxWidth:100, minHeight:10,marginLeft:5},
             ], null,frame.color, false, new Shape(), stage
         ); // for content on page1
 
@@ -250,7 +268,7 @@ function game() {
           var layoutStage= new Layout(stage,
             [
                 {object:button, width:3, valign:"top"},
-                {object:objContainer, maxHeight:90, align:"middle"}
+                {object:objContainer, marginTop:6, width:15,valign:"bottom"}
             ], null,null, false, new Shape(), stage
         ); // for button & container
 
