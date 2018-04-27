@@ -127,7 +127,7 @@ var start_label= new Label({
 function game() {
 
 //~~~~~Page1
-        var page1= new Container().addTo(stage);;
+        var page1= new Container().addTo(stage);
 
         var contentPage1= new Container(stageW,stageW).addTo(page1);
         var ball=frame.asset('ball.png').sca(0.5);
@@ -174,15 +174,18 @@ function game() {
                 console.log("click");
             }); // end of button
 
-        // var objContainer= new Container(500,500).center(stage);
-        var objContainer= new Container(stageW,stageH).center(stage);
+        var objContainer= new Container(500,500).center(stage);
+        // var objContainer= new Container(500,500).centerReg(stage).outline();
+
         var objHolder= new Rectangle({
-                width:300,
+                width:250,
                 height:80, 
                 color:"#C26561", 
                 corner:20})
             .center(objContainer)
-            .mov(0,130);
+            .mov(0,130)
+           .center(objContainer)
+           .outline();
 
         var itemHold1= new Rectangle({
                 width:50,
@@ -190,15 +193,32 @@ function game() {
                 color:"#F5DAD9", 
                 corner:10})
             .center(objContainer)
-            .mov(0,130);
+            .mov(0,0);
 
         var itemHold2=itemHold1.clone()
             .center(objContainer)
-            .mov(90,130);
+            .mov(90,0);
 
          var itemHold3=itemHold1.clone()
             .center(objContainer)
-            .mov(-90,130);
+            .mov(-90,0);
+
+        // var intrHold=new Container(500,500).addTo(stage);
+        // var label = new Label({
+        //    text:"i",
+        //    size:40,
+        //    color:"violet",
+        //    fontOptions:"bold"
+        // });
+        // var instructions = new Button({
+        //    label:label,
+        //    width:390,
+        //    height:110,
+        //    color:"purple",
+        //    borderWidth:8,
+        //    gradient:.3,
+        //    corner:0
+        // }).center(intrHold);
 
 
 
@@ -209,23 +229,30 @@ function game() {
               // circle.y=objHolder.y;
               stage.update();
            }
-        });
+        });// works
 
 
 //~~~ Layout
-
+//(holder, regions, lastMargin, backgroundColor, vertical, regionShape, scalingObject, hideKey)
         var layout= new Layout(page1,
             [
                 {object:contentPage1,  maxWidth:80, minHeight:10,marginLeft:5},
             ], null,frame.color, false, new Shape(), stage
         ); // for content on page1
 
-         var layoutStage= new Layout(stage,
+        //  var layoutStage= new Layout(stage,
+        //     [
+        //         {object:button, width:3},
+        //          {object:objContainer,  marginTop:10, width:25, valign:"bottom"}
+        //     ], null,null, false, new Shape(), stage
+        // ); // for button
+
+          var layoutStage= new Layout(stage,
             [
-                {object:button, width:3},
-                 {object:objContainer,  marginTop:10, align:"center", width:50, valign:"bottom"}
+                {object:button, width:3, valign:"top"},
+                {object:objContainer, maxHeight:90, align:"middle"}
             ], null,null, false, new Shape(), stage
-        ); // for button
+        ); // for button & container
 
         
         manager.add(layout);
