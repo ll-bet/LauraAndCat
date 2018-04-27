@@ -18,10 +18,10 @@
 <!-- use zimjs.com/distill for minified individual functions! -->
 
 <style>
-    @font-face {
+   /* @font-face {
             font-family: Gugi;
             src: url(assets/fonts/Gugi-Regular.ttf);
-        }
+        }*/
 </style>
 
 <script>
@@ -48,7 +48,7 @@ frame.on("ready", function() {
 //     var waiter = new Waiter(stage);
 // waiter.show(); 
 
-  frame.loadAssets(['ball.png','cards.png','cat.png','clock.png','coin.png','cube.png','dice.png','forest.png','girl.png','lizzard.png','main.png','rock.png','sea.png','tree.png','BeepBox-Song.wav','sound.png','mute.png'], "assets/");
+  frame.loadAssets(['ball.png','cards.png','cat.png','clock.png','coin.png','cube.png','dice.png','forest.png','girl.png','lizzard.png','main.png','rock.png','sea.png','tree.png','BeepBox-Song.wav','sound.png','mute.png',{font:"Gugi", src:"/fonts/Gugi-Regular.ttf"}], "assets/");
   
 frame.on("complete", function(){
      // waiter.hide();
@@ -129,6 +129,7 @@ var start_label= new Label({
             introScreen .removeFrom(stage);
             stage.update();
             game();
+           // instructions();
         });
 
  // frame.on("resize", function() {
@@ -140,7 +141,9 @@ var start_label= new Label({
 }// end of intro()
 
 
+function instructions(){
 
+}
 
  //game();
 function game() {
@@ -149,12 +152,17 @@ function game() {
         var page1= new Container().addTo(stage);
 
         var contentPage1= new Container(stageW,stageH).addTo(page1);
-      
-        
-        ball.addTo(contentPage1).sca(0.3).pos(200,500).outline();
-           // ball.outline();
+      // ball.outline();
+
+      //BACKGROUND
         var bg_game= frame.asset('main.png').center(contentPage1);
+    //END OF BACKGROUND 
+        
+           
         var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).pos(610, 317);
+
+        ball.addTo(contentPage1).sca(0.3).pos(498, 426).drag();
+        //var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).pos(610, 317);
 
         // var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).place("rock");
 
@@ -293,14 +301,27 @@ function game() {
            }
 
            if (circle.hitTestBounds(rectHit)) {
-
-            score++;
-              console.log(score);
-              circle.removeFrom(contentPage1);
+                itemCheck();
+            // score++;
+            //   console.log(score);
+            //   circle.removeFrom(contentPage1);
           }
             stage.update();
         });// works
 
+
+function itemCheck(){
+
+    if (circle.hitTestBounds(rectHit)) {
+        console.log("correct object")
+
+    }else{
+         console.log("incorrect object")
+
+    }// end of if
+        
+
+}// end of item check
 
 // function response(){
 
