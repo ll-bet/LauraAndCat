@@ -56,6 +56,8 @@ frame.on("complete", function(){
 var music =frame.asset("BeepBox-Song.wav").play({loop:-1, volume:.5});
 var manager = new LayoutManager();
 var responseLabel;
+var responseText;
+
 
  game();
 // intro();
@@ -232,6 +234,7 @@ function game() {
               // circle.x=objHolder.x;
               // circle.y=objHolder.y;
               // stage.update();
+              responseText="you found an item"
               response();
            }
         });// works
@@ -240,7 +243,7 @@ function game() {
 function response(){
 
     responseLabel= new Label({
-            text: "start",
+            text: responseText,
             size:100,
             color:"black",
             font:"Gugi",
