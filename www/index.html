@@ -52,18 +52,29 @@ frame.on("ready", function() {
   
 frame.on("complete", function(){
      // waiter.hide();
-//~~~ Images
+//~~~ items
+
+//PAGE1
 var ball=frame.asset('ball.png');
-var cards=frame.asset('cards.png');
-var cat=frame.asset('cat.png');
-var coin=frame.asset('coin.png');
 var cube=frame.asset('cube.png');
-var dice=frame.asset('cube.png');
+
+//PAGE2
+var coin=frame.asset('coin.png');
+var dice=frame.asset('dice.png');
+var clock=frame.asset('clock.png');
+
+//PAGE3
+var cards=frame.asset('cards.png'); 
 var lizzard=frame.asset('lizzard.png');
 var tree=frame.asset('tree.png');
+
+
 var forest=frame.asset('forest.png');
-var clock=frame.asset('clock.png');
-var girl=frame.asset('girl.png');
+
+
+//~~~~characters
+var cat=frame.asset('cat.png');//page1
+var girl=frame.asset('girl.png');//page1
 
 //~~ score
 
@@ -153,7 +164,7 @@ function game() {
         var contentPage1= new Container(stageW,stageH).addTo(page1);
       // ball.outline();
 
-      //BACKGROUND
+    //BACKGROUND
         var bg_game= frame.asset('main.png').center(contentPage1);
     //END OF BACKGROUND 
     
@@ -173,24 +184,53 @@ function game() {
 
         var circle= new Circle(50, "red").addTo(page1Items).pos(330, 300);
        // var circle= new Circle(50, "red").addTo(page1Items).pos(330, 300).drag();
+       cat.addTo(page1Items).sca(0.5).pos(600, 300); 
+        var rectHit=new Rectangle(50,50, "blue").addTo(page1Items).pos(200, 500);
 
-        var rectHit=new Rectangle(50,50, "blue").addTo(contentPage1).pos(200, 500);
-
-        var array=[ball, circle];
+        //var array=[ball, circle];
 
 //~~~Page 2
-         // layout.removeShape();
+    //PAGE CONTAINER   // layout.removeShape();
         var page2= new Container().addTo(stage);
-        var rect2= new Rectangle(stageW, stageH, frame.blue).addTo(page2);
+        // var rect2= new Rectangle(stageW, stageH, frame.blue).addTo(page2);
+    // END OF PAGE CONTAINER 
 
-
+    //BACKGROUND
         var bg_sea= frame.asset('sea.png').center(page2);
+    //END OF BACKGROUND
 
+    //PAGE ITEMS CONTAINER
+        var page2Items=new Container().addTo(page2).drag();
+    //END OF PAGE ITEMS CONTAINER
+
+    //ITEMS PAGE 2
+
+    coin.addTo(page2Items).sca(0.3).pos(300, 326);
+    dice.addTo(page2Items).sca(0.3).pos(140, 476);
+    clock.addTo(page2Items).sca(0.3).pos(520, 125);
+
+    //END OF ITEMS
 
 //~~~~Page 3
 
         var page3= new Container().addTo(stage);
+    //BACKGROUND
         var bg_forest= frame.asset('forest.png').center(page3);
+    // END OF BACKGROUND 
+
+    //PAGE 3 ITEMS CONTAINER
+
+    //PAGE ITEMS CONTAINER
+        var page3Items=new Container().addTo(page3).drag();
+    //END OF PAGE 3 ITEMS CONTAINER
+
+    //ITEMS PAGE 3
+        cards.addTo(page3Items).sca(0.3).pos(556, 239);
+        lizzard.addTo(page3Items).sca(0.3).pos(140, 376);
+        tree.addTo(page3Items).sca(0.3).pos(265, 223);
+
+
+    //END OF ITEMS
 
 //~~~Pages together
         var pages= new Pages({
@@ -229,20 +269,22 @@ function game() {
         var objContainer= new Container(contW,contH).center(stageCont);
         // var objContainer= new Container(500,500).centerReg(stage).outline();
 
-        var objHolder= new Rectangle({
-                width:250,
-                height:80, 
-                color:"#C26561", 
-                corner:20})
-            .center(objContainer)
-            .mov(0,130)
-           .center(objContainer)
-           .outline();
+        // var objHolder= new Rectangle({
+        //         width:250,
+        //         height:80, 
+        //         color:"#C26561", 
+        //         corner:20})
+        //     .center(objContainer)
+        //     .mov(0,130)
+        //    .center(objContainer)
+        //    .outline();
 
         var itemHold1= new Rectangle({
-                width:50,
-                height:50, 
-                color:"#F5DAD9", 
+                width:60,
+                height:60, 
+                color:"#F5DAD9",
+                borderColor:"black",
+                borderWidth:5, 
                 corner:10})
             .center(objContainer)
             .mov(0,0);
@@ -279,31 +321,69 @@ function game() {
 
     //GRABBING AND DROPPING ITEMS
         page1Items.on("pressmove", function(e) {
-           if (e.target.parent!=stageCont && e.target.hitTestBounds(itemHold1)) {
+           if (e.target.parent!=stageCont && ( e.target.hitTestBounds(itemHold1)|| e.target.hitTestBounds(itemHold2) ||e.target.hitTestBounds(itemHold3)) ) {
                 console.log("hit");
                 e.target.addTo(stageCont);
                 e.target.drag();
                 //e.target.parent.mov(10,10);
+                 stage.update();
             }
-            stage.update();
-        });// doesnt work
+           
+        });// works?
+
+         page2Items.on("pressmove", function(e) {
+           if (e.target.parent!=stageCont &&(e.target.hitTestBounds(itemHold1) || e.target.hitTestBounds(itemHold2) ||e.target.hitTestBounds(itemHold3)) ) {
+                console.log("hit");
+                e.target.addTo(stageCont);
+                e.target.drag();
+                //e.target.parent.mov(10,10);
+                 stage.update();
+            }
+           
+        });// works?
+
+          page3Items.on("pressmove", function(e) {
+           if (e.target.parent!=stageCont && (e.target.hitTestBounds(itemHold1)|| e.target.hitTestBounds(itemHold2) ||e.target.hitTestBounds(itemHold3))) {
+                console.log("hit");
+                e.target.addTo(stageCont);
+                e.target.drag();
+                //e.target.parent.mov(10,10);
+                stage.update();
+            }
+            
+        });// works?
 
         stageCont.on("pressmove", function(e){
-            if(e.target.parent==stageCont && !e.target.hitTestBounds(itemHold1)){
+            if(e.target.parent==stageCont && (!e.target.hitTestBounds(itemHold1) || !e.target.hitTestBounds(itemHold2) || !e.target.hitTestBounds(itemHold3))){
                  e.target.addTo(pages.page);
                  if(pages.page==page1){
                     e.target.addTo(page1Items);
                     console.log("im on the main page");
                  } else if(pages.page==page2){
+                    e.target.addTo(page2Items);
                      console.log("im on page 2");
                  } else if (pages.page==page3){
+                    e.target.addTo(page3Items);
                     console.log("im on page 3");
                  }// end of page check
-                 
+                
             }//end of hit test
-            stage.update();
+             stage.update();
         });
     // END OF GRABBING AND DROPPING ITEMS
+
+       
+
+    //ANSWER CHECK
+    coin.on("pressmove", function() {
+            if (coin.hitTestBounds(rectHit)) {
+                console.log("correct object");
+
+            }// end of if
+    });
+    //END OF ANSWER CHECK
+
+
 
      // circle.on("pressmove", function() {
      //       if (circle.parent!=stage && circle.hitTestBounds(itemHold1)) {
@@ -321,19 +401,20 @@ function game() {
  //    e.target.addTo(pages.page);
 
  // });
+// itemCheck();
 
-function itemCheck(){
+// function itemCheck(){
 
-    if (circle.hitTestBounds(rectHit)) {
-        console.log("correct object")
+//     if (circle.hitTestBounds(rectHit)) {
+//         console.log("correct object")
 
-    }else{
-         console.log("incorrect object")
+//     }else{
+//          console.log("incorrect object")
 
-    }// end of if
+//     }// end of if
         
 
-}// end of item check
+// }// end of item check
 
 // function response(){
 
