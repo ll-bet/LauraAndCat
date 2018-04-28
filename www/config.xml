@@ -71,6 +71,7 @@
     -->
 
     <!-- Define app icon for each platform. -->
+    <icon src="icon/icon.png" platform="android" qualifier="xhdpi" />
      <splash src="splash.png" width="320" height="480" />
 
     <platform name="ios">
