@@ -50,7 +50,7 @@ frame.on("ready", function() {
 
   frame.loadAssets(['ball.png','cards.png','cat.png','clock.png','coin.png','cube.png','dice.png','forest.png','girl.png','lizzard.png','main.png','rock.png','sea.png','tree.png','BeepBox-Song.wav','sound.png','mute.png',{font:"Gugi", src:"/fonts/Gugi-Regular.ttf"}], "assets/");
   
-frame.on("complete", function(){
+frame.on("complete", function(){ 
      // waiter.hide();
 //~~~ items
 
@@ -70,6 +70,7 @@ var tree=frame.asset('tree.png');
 
 
 var forest=frame.asset('forest.png');
+var bg= frame.asset('main.png');
 
 
 //~~~~characters
@@ -85,6 +86,9 @@ var manager = new LayoutManager();
 var responseLabel;
 var responseText;
 var button;
+ var prologueSceen=new Container (stageW, stageH);
+var screenCont= new Container();
+var introScreen = new Container(stageW,stageH).addTo(stage);
 
 // game();
 intro();
@@ -92,11 +96,10 @@ intro();
 
 function intro() { 
 
-var screenCont= new Container();
-var introScreen = new Container(stageW,stageH).addTo(stage);
 
 
-var bg= frame.asset('main.png').center(introScreen);
+
+bg.center(introScreen);
 var title= new Label({
    text:"Laura & Cat",
    size:65,
@@ -136,24 +139,53 @@ var start_label= new Label({
         );
 
  start_btn.on("click", function(e){
-            introScreen .removeFrom(stage);
+            title.removeFrom(introScreen);
+            start_btn.removeFrom(introScreen);
             stage.update();
-            game();
-           // instructions();
+            // game();
+           instr();
         });
-
- // frame.on("resize", function() {
-       
- //      introScreen.resize();
- //      stage.update();
- //    });
 
 }// end of intro()
 
+function instr(){
+    console.log("hit")
+    var instructions = new Label({
+           text:"Help Laura escape the\n mystical land by solving all of\n the cat's riddles.",
+           size:23,
+           color:"white",
+           align:"center",
+           lineHeight:30,
+           backgroundColor:"#628b9f",
+           backgroundBorderColor:"#19455a",
+            backgroundBorderWidth:10, 
+            backgroundCorner:20,
+            padding:15
+        }).center(introScreen).mov(0,-50);
 
-function instructions(){
 
-}
+
+    var next=new Button({
+            label:"next",
+            width:115,
+            height:75,
+            color:"#FF5733",
+            rollColor:"darkorange",
+            corner:35
+        })
+    .center(introScreen)
+    .mov(0,100);
+
+    next.on("click", function(e){
+            introScreen.removeFrom(stage);
+            stage.update();
+            game();
+        });
+
+
+stage.update();
+}// end of instructions()
+
 
  //game();
 function game() {
@@ -177,22 +209,22 @@ function game() {
         var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).pos(610, 317);
 
         ball.addTo(page1Items).sca(0.3).pos(498, 426);
-        //ball.addTo(page1Items).sca(0.3).pos(498, 426).drag();
-        //var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).pos(610, 317);
-
-        // var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).place("rock");
+        
 
         var circle= new Circle(50, "red").addTo(page1Items).pos(330, 300);
-       // var circle= new Circle(50, "red").addTo(page1Items).pos(330, 300).drag();
-       cat.addTo(page1Items).sca(0.5).pos(600, 300); 
-        var rectHit=new Rectangle(50,50, "blue").addTo(page1Items).pos(200, 500);
+       
+       cat.addTo(page1Items).sca(0.5).pos(900, 300).noDrag(); 
 
-        //var array=[ball, circle];
+        var rectHit=new Rectangle(50,50, "blue").addTo(page1Items).pos(200, 500).noDrag();
+
+    girl.addTo(contentPage1).sca(0.3).pos(200, 300);
+
+    
 
 //~~~Page 2
     //PAGE CONTAINER   // layout.removeShape();
         var page2= new Container().addTo(stage);
-        // var rect2= new Rectangle(stageW, stageH, frame.blue).addTo(page2);
+      
     // END OF PAGE CONTAINER 
 
     //BACKGROUND
@@ -228,6 +260,7 @@ function game() {
         cards.addTo(page3Items).sca(0.3).pos(556, 239);
         lizzard.addTo(page3Items).sca(0.3).pos(140, 376);
         tree.addTo(page3Items).sca(0.3).pos(265, 223);
+        cube.addTo(page3Items).sca(0.3).pos(600, 95);
 
 
     //END OF ITEMS
@@ -263,8 +296,8 @@ function game() {
                 music.muted=button.toggled;
             }); // end of button
 
-        var contW=250;
-        var contH=80;
+        var contW=300;
+        var contH=90;
 
         var objContainer= new Container(contW,contH).center(stageCont);
         // var objContainer= new Container(500,500).centerReg(stage).outline();
@@ -280,8 +313,8 @@ function game() {
         //    .outline();
 
         var itemHold1= new Rectangle({
-                width:60,
-                height:60, 
+                width:70,
+                height:70, 
                 color:"#F5DAD9",
                 borderColor:"black",
                 borderWidth:5, 
@@ -298,41 +331,92 @@ function game() {
             .mov(-90,0);
 // END OF STAGE OBJECTS
 
-        // var intrHold=new Container(500,500).addTo(stage);
-        // var label = new Label({
-        //    text:"i",
-        //    size:40,
-        //    color:"violet",
-        //    fontOptions:"bold"
-        // });
-        // var instructions = new Button({
-        //    label:label,
-        //    width:390,
-        //    height:110,
-        //    color:"purple",
-        //    borderWidth:8,
-        //    gradient:.3,
-        //    corner:0
-        // }).center(intrHold);
+//item check
+var catAnswerCont= new Container();
 
-        // page1.on("click", function(e) {
-        //     console.log("clicked");
-        // });
+     var catAnswer= 
+    new Label({
+           text:"This is a correct item",
+           size:23,
+           color:"black",
+           align:"center",
+           lineHeight:30,
+           backgroundColor:"#cccccc",
+           backgroundBorderColor:"#19455a",
+            backgroundBorderWidth:10, 
+            backgroundCorner:20,
+            padding:15
+        });
+    var catAhold= new Button({
+            label:"x",
+           width:50,
+           height:50,
+           color:"purple",
+           rollColor:"MediumOrchid",
+           corner:25
+            }).center(catAnswerCont).mov(catAnswer.width/2+25,0);
+   
+   catAhold.on("click",function() {
+        catAnswerCont.removeFrom(stage);
+        //coin.removeFrom(page1Items);
+       score++;
+       if (score==3){
+        console.log("done");
+       }
+        
+        stage.update();
+    });
+
+
+
+
+//end of item check
+
+
+
+
+
+
 
     //GRABBING AND DROPPING ITEMS
         page1Items.on("pressmove", function(e) {
-           if (e.target.parent!=stageCont && ( e.target.hitTestBounds(itemHold1)|| e.target.hitTestBounds(itemHold2) ||e.target.hitTestBounds(itemHold3)) ) {
+           if (e.target.parent!=stageCont &&  e.target.hitTestBounds(objContainer) ) {
                 console.log("hit");
                 e.target.addTo(stageCont);
                 e.target.drag();
                 //e.target.parent.mov(10,10);
                  stage.update();
             }
+
+            if (coin.hitTestBounds(cat) ) {
+                console.log("correct object");
+                coin.removeFrom(page1Items);
+                catAnswer.addTo(catAnswerCont);
+                catAnswerCont.center(stage);
+                stage.update();
+            }// end of if
+
+            if (cards.hitTestBounds(cat) ) {
+                console.log("correct object");
+                cards.removeFrom(page1Items);
+                catAnswer.addTo(catAnswerCont);
+                catAnswerCont.center(stage);
+                stage.update();
+            }// end of if
+
+             if (clock.hitTestBounds(cat)) {
+                console.log("correct object");
+                clock.removeFrom(page1Items);
+                catAnswer.addTo(catAnswerCont);
+                catAnswerCont.center(stage);
+                stage.update();
+            }// end of if
+
            
         });// works?
 
          page2Items.on("pressmove", function(e) {
-           if (e.target.parent!=stageCont &&(e.target.hitTestBounds(itemHold1) || e.target.hitTestBounds(itemHold2) ||e.target.hitTestBounds(itemHold3)) ) {
+           if (e.target.parent!=stageCont &&e.target.hitTestBounds(objContainer) ) {
                 console.log("hit");
                 e.target.addTo(stageCont);
                 e.target.drag();
@@ -343,7 +427,7 @@ function game() {
         });// works?
 
           page3Items.on("pressmove", function(e) {
-           if (e.target.parent!=stageCont && (e.target.hitTestBounds(itemHold1)|| e.target.hitTestBounds(itemHold2) ||e.target.hitTestBounds(itemHold3))) {
+           if (e.target.parent!=stageCont && e.target.hitTestBounds(objContainer)) {
                 console.log("hit");
                 e.target.addTo(stageCont);
                 e.target.drag();
@@ -354,7 +438,7 @@ function game() {
         });// works?
 
         stageCont.on("pressmove", function(e){
-            if(e.target.parent==stageCont && (!e.target.hitTestBounds(itemHold1) || !e.target.hitTestBounds(itemHold2) || !e.target.hitTestBounds(itemHold3))){
+            if(e.target.parent==stageCont && !e.target.hitTestBounds(objContainer)) {
                  e.target.addTo(pages.page);
                  if(pages.page==page1){
                     e.target.addTo(page1Items);
@@ -366,87 +450,71 @@ function game() {
                     e.target.addTo(page3Items);
                     console.log("im on page 3");
                  }// end of page check
-                
             }//end of hit test
              stage.update();
         });
     // END OF GRABBING AND DROPPING ITEMS
-
-       
-
+    
     //ANSWER CHECK
-    coin.on("pressmove", function() {
-            if (coin.hitTestBounds(rectHit)) {
-                console.log("correct object");
+    // coin.on("pressmove", function() {
+    //     if (coin.hitTestBounds(cat)) {
+    //         console.log("correct object");
+    //         catAnswer.addTo(catAnswerCont);
+    //         catAnswerCont.center(stage);
+    //         stage.update();
 
-            }// end of if
-    });
+    //     }// end of if
+    // });
     //END OF ANSWER CHECK
 
 
+//CATS RIDDLES
 
-     // circle.on("pressmove", function() {
-     //       if (circle.parent!=stage && circle.hitTestBounds(itemHold1)) {
-     //          console.log("hit");
-     //          circle.addTo(stage);
-     //            circle.mov(10,10);
-     //        }else if(circle.parent==stage && !circle.hitTestBounds(itemHold1)){
-     //            circle.addTo(pages.page);
+var questions=['1. I have a tail, and I have a head, but I have no body. I am NOT a snake. What am I?', '2. What has hands but can not clap?','3. What has 13 hearts, but no other organs?'];
 
-     //        }
-     //        stage.update();
-     //    });// works
+//var riddles;
 
- // circle.on("pressup", function(e) {
- //    e.target.addTo(pages.page);
+    cat.on("click",function(e) {
+       riddlePrint();
+    });
+var titles = new Container()
+        .addTo(contentPage1)
+        .pos(400, 150);
 
- // });
-// itemCheck();
+    var riddles;     
+function riddlePrint(){
+    //shuffle(questions);
+   
+        loop(questions, function(riddle, i) {
+            // 4. make ZIM Label with following parameters (more options in doc)
+            // labelText, fontSize, font, textColor, textRollColor, shadowColor
+            riddles = new Label({
+                text:riddle,
+                size:20,
+                font:"Courier",
+                 color:"#660066",
+                 lineWidth:700,
+                  fontOptions:"bold"
+            })
+                .addTo(titles)
+                .pos(null, i * 50)
+            riddles.startX = riddles.x; // for snapping
+            riddles.startY = riddles.y;
+        });
 
-// function itemCheck(){
+}//end of riddle print
 
-//     if (circle.hitTestBounds(rectHit)) {
-//         console.log("correct object")
-
-//     }else{
-//          console.log("incorrect object")
-
-//     }// end of if
-        
-
-// }// end of item check
-
-// function response(){
+// END OF RIDDLES
 
 
+    //  GAME CHECK
+    if(score==1){
+        console.log("Laura is free");
+    }
 
-//     // responseLabel= new Label({
-//     //         text: responseText,
-//     //         size:100,
-//     //         color:"black",
-//     //         font:"Gugi"
-//     //     }).center(stage);
-//     stage.update();
-
-// }// enf of response
-
-//var rectTest= new Rectangle(100,100).addTo(stage);
+    // GAME END
 //~~~ Layout
 //(holder, regions, lastMargin, backgroundColor, vertical, regionShape, scalingObject, hideKey)
-        // var layout= new Layout(page1,
-        //     [
-        //         {object:contentPage1,  maxWidth:100, minHeight:10,marginLeft:5},
-        //     ], null,frame.color, false, new Shape(), stage
-        // ); // for content on page1
-
-
-
-        //  var layoutStage= new Layout(stage,
-        //     [
-        //         {object:button, width:3},
-        //          {object:objContainer,  marginTop:10, width:25, valign:"bottom"}
-        //     ], null,null, false, new Shape(), stage
-        // ); // for button
 
           var layoutStage= new Layout(stage,
             [
@@ -489,6 +557,7 @@ stage.update(); //of frame complete
     stage.update(); // this is needed to show any changes
 
 }); // end of ready
+
 
 </script>
 
