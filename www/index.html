@@ -19,8 +19,8 @@
 
 <style>
     @font-face {
-            font-family: 'Gugi';
-            src: url(/assets/fonts/Gugi-Regular.ttf);
+            font-family: 'Gugi-Regular';
+            src: url(/assets/fonts/Gugi-Regular.ttf) format('truetype');
         }
 </style>
 
@@ -48,7 +48,7 @@ frame.on("ready", function() {
     var waiter = new Waiter(stage);
 waiter.show(); 
 
-  frame.loadAssets(['ball.png','cards.png','cat.png','clock.png','coin.png','cube.png','dice.png','forest.png','girl.png','lizzard.png','main.png','rock.png','sea.png','tree.png','BeepBox-Song.wav','sound.png','mute.png',{font:"Gugi", src:"/fonts/Gugi-Regular.ttf"}], "assets/");
+  frame.loadAssets(['ball.png','cards.png','cat.png','clock.png','coin.png','cube.png','dice.png','forest.png','girl.png','lizzard.png','main.png','rock.png','sea.png','tree.png','BeepBox-Song.wav','sound.png','mute.png',{font:"Gugi-Regular", src:"/fonts/Gugi-Regular.ttf"}], "assets/");
   
 frame.on("complete", function(){ 
      waiter.hide();
@@ -105,7 +105,7 @@ bg.center(introScreen);
 var title= new Label({
    text:"Laura & Cat",
    size:65,
-   font:"Gugi",
+   font:"Gugi-Regular",
    color:"white",
    rollColor:"red"
 }).center(introScreen)
@@ -117,7 +117,7 @@ var start_label= new Label({
             text: "start",
             size:25,
             color:"white",
-            font:"Gugi",
+            font:"Gugi-Regular",
             fontOptions:"bold"
         });
 
@@ -139,7 +139,7 @@ var start_label= new Label({
                 {object:introScreen},
             ], null,null, false, new Shape(), stage
         );
-
+ layoutIntro.dispose();
  start_btn.on("click", function(e){
             title.removeFrom(introScreen);
             start_btn.removeFrom(introScreen);
@@ -157,6 +157,7 @@ function instr(){
            size:23,
            color:"white",
            align:"center",
+            font:"courier",
            lineHeight:30,
            backgroundColor:"#628b9f",
            backgroundBorderColor:"#19455a",
@@ -165,10 +166,16 @@ function instr(){
             padding:15
         }).center(introScreen).mov(0,-50);
 
-
+ var nextLabel= new Label({
+   text:"next",
+   font:"courier",
+   size:25,
+   color:"white",
+   fontOptions:"bold"
+});
 
     var next=new Button({
-            label:"next",
+            label:nextLabel,
             width:115,
             height:75,
             color:"#FF5733",
@@ -213,18 +220,19 @@ function game() {
         ball.addTo(page1Items).sca(0.3).pos(498, 426);
         
 
-        var circle= new Circle(50, "red").addTo(page1Items).pos(330, 300);
+        //var circle= new Circle(50, "red").addTo(page1Items).pos(330, 300);
        
        cat.addTo(page1Items).sca(0.5).pos(900, 300).noDrag(); 
 
-        var rectHit=new Rectangle(50,50, "blue").addTo(page1Items).pos(200, 500).noDrag();
+        //var rectHit=new Rectangle(50,50, "blue").addTo(page1Items).pos(200, 500).noDrag();
 
     girl.addTo(contentPage1).sca(0.3).pos(200, 300);
 
     
 
 //~~~Page 2
-    //PAGE CONTAINER   // layout.removeShape();
+    //PAGE CONTAINER  
+
         var page2= new Container().addTo(stage);
       
     // END OF PAGE CONTAINER 
@@ -391,18 +399,25 @@ console.log("im done");
                     backgroundBorderColor:"#19455a",
                     backgroundBorderWidth:10, 
                     backgroundCorner:20,
-                    font:"Gugi",
+                    font:"Gugi-Regular",
                     align:"center"
                 }).center(containerEnd).mov(0,-40);
 
+
+     var exitLabel= new Label({
+   text:"restart",
+   font:"courier",
+   size:25,
+   color:"white",
+   fontOptions:"bold"
+});
+
     var exitButton = new Button({ 
-                        label:"done",
+                        label:exitLabel,
                         width:150,
                         height:75,
-                        color:"#38b238",
-                        rollColor:"darkorange",
-                        borderColor:"#284335",
-                        corner:20
+                        color:"#FF5733",
+                        corner:25
                       });
 
 var buttonHold=new Container(button.width, button.height)
@@ -580,7 +595,8 @@ function riddlePrint(){
             ], 33,null, false, new Shape(), stage
         ); // for button & container
 
-        
+          layoutStage.dispose();
+         layout.dispose();
         // manager.add(layout);
         manager.add(layoutStage);
         // manager.add(layoutIntro);
