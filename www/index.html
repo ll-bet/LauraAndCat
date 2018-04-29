@@ -83,7 +83,8 @@ var girl=frame.asset('girl.png');//page1
 
 var score=0;
 var startPan = 0;
-var music =frame.asset("BeepBox-Song.wav").play({loop:-1,pan:startPan,volume:.5});
+var startVolume=.5;
+var music =frame.asset("BeepBox-Song.wav").play({loop:-1,pan:startPan,volume:startVolume});
 var manager = new LayoutManager();
 var responseLabel;
 var responseText;
@@ -436,7 +437,8 @@ var buttonHold=new Container(button.width, button.height)
                   // page1.removeAllChildren();
                   // page2.removeAllChildren();
                   // page3.removeAllChildren();
-                  startPan=0;
+                  music.volume=startVolume;
+                  //startPan=0;
                   music.pan = startPan;
                   stage.removeAllChildren();
                   stage.update();
