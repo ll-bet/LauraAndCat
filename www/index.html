@@ -218,13 +218,13 @@ function game() {
     //PAGE ITEMS
         var rock= frame.asset('rock.png').center(contentPage1).sca(0.5).pos(610, 317);
 
-        ball.addTo(page1Items).sca(0.3).pos(498, 426);
+       
         
 
         //var circle= new Circle(50, "red").addTo(page1Items).pos(330, 300);
-       
-       cat.addTo(page1Items).sca(0.5).pos(900, 300).noDrag(); 
-
+      var catContainer=new Container().addTo(page1);
+       cat.addTo(catContainer).sca(0.5).pos(900, 200).expand(); 
+       cat.outline();
         //var rectHit=new Rectangle(50,50, "blue").addTo(page1Items).pos(200, 500).noDrag();
 
     girl.addTo(contentPage1).sca(0.3).pos(200, 300);
@@ -247,7 +247,7 @@ function game() {
     //END OF PAGE ITEMS CONTAINER
 
     //ITEMS PAGE 2
-
+ ball.addTo(page2Items).sca(0.3).pos(750, 426);
     coin.addTo(page2Items).sca(0.3).pos(300, 326);
     dice.addTo(page2Items).sca(0.3).pos(140, 476);
     clock.addTo(page2Items).sca(0.3).pos(520, 125);
@@ -458,12 +458,13 @@ var buttonHold=new Container(button.width, button.height)
            if (e.target.parent!=stageCont &&  e.target.hitTestBounds(objContainer) ) {
                 console.log("hit");
                 e.target.addTo(stageCont);
-                e.target.drag();
-                //e.target.parent.mov(10,10);
+                e.target.mov(0,10);
+               // e.target.drag();
+               
                  stage.update();
             }
 
-            if (coin.hitTestBounds(cat) ) {
+            if (coin.hitTestBounds(catContainer) ) {
                 console.log("correct object");
                 coin.removeFrom(page1Items);
                 catAnswer.addTo(catAnswerCont);
@@ -471,7 +472,7 @@ var buttonHold=new Container(button.width, button.height)
                 stage.update();
             }// end of if
 
-            if (cards.hitTestBounds(cat) ) {
+            if (cards.hitTestBounds(catContainer) ) {
                 console.log("correct object");
                 cards.removeFrom(page1Items);
                 catAnswer.addTo(catAnswerCont);
@@ -479,7 +480,7 @@ var buttonHold=new Container(button.width, button.height)
                 stage.update();
             }// end of if
 
-             if (clock.hitTestBounds(cat)) {
+             if (clock.hitTestBounds(catContainer)) {
                 console.log("correct object");
                 clock.removeFrom(page1Items);
                 catAnswer.addTo(catAnswerCont);
@@ -494,6 +495,7 @@ var buttonHold=new Container(button.width, button.height)
            if (e.target.parent!=stageCont &&e.target.hitTestBounds(objContainer) ) {
                 console.log("hit");
                 e.target.addTo(stageCont);
+                  e.target.mov(0,10);
                 e.target.drag();
                 //e.target.parent.mov(10,10);
                  stage.update();
@@ -505,7 +507,8 @@ var buttonHold=new Container(button.width, button.height)
            if (e.target.parent!=stageCont && e.target.hitTestBounds(objContainer)) {
                 console.log("hit");
                 e.target.addTo(stageCont);
-                e.target.drag();
+                  e.target.mov(0,10);
+               e.target.drag();
                 //e.target.parent.mov(10,10);
                 stage.update();
             }
