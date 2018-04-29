@@ -45,15 +45,17 @@ frame.on("ready", function() {
 
     frame.color = "#ddd";
 
-//     var waiter = new Waiter(stage);
-// waiter.show(); 
+    var waiter = new Waiter(stage);
+waiter.show(); 
 
   frame.loadAssets(['ball.png','cards.png','cat.png','clock.png','coin.png','cube.png','dice.png','forest.png','girl.png','lizzard.png','main.png','rock.png','sea.png','tree.png','BeepBox-Song.wav','sound.png','mute.png',{font:"Gugi", src:"/fonts/Gugi-Regular.ttf"}], "assets/");
   
 frame.on("complete", function(){ 
-     // waiter.hide();
+     waiter.hide();
 //~~~ items
+start();
 
+function start(){
 //PAGE1
 var ball=frame.asset('ball.png');
 var cube=frame.asset('cube.png');
@@ -361,7 +363,7 @@ var catAnswerCont= new Container();
         //coin.removeFrom(page1Items);
        score++;
        if (score==3){
-        //console.log("done");
+            console.log("done");
             done();
        }
         
@@ -374,23 +376,59 @@ var catAnswerCont= new Container();
 //end of item check
 
 function done(){
-
+console.log("im done");
     rectW=400;
     rectH=200;
-    var container = new Container(rectW, rectH).addTo(stage,0);
-     container.x=-rectW;
-    container.y=300;
+    var containerEnd = new Container(rectW, rectH).center(stage);
+     containerEnd.x=-rectW;
+    containerEnd.y=300;
 
-    var label = new Label({
+    var endLabel = new Label({
                     text:"Laura is free!",
                     size:50,
                     color:"black",
-                    font:"Cookies",
+                    backgroundColor:"#628b9f",
+                    backgroundBorderColor:"#19455a",
+                    backgroundBorderWidth:10, 
+                    backgroundCorner:20,
+                    font:"Gugi",
                     align:"center"
-                }).center(rectangle).mov(0,-40);
+                }).center(containerEnd).mov(0,-40);
 
+    var exitButton = new Button({ 
+                        label:"done",
+                        width:150,
+                        height:75,
+                        color:"#38b238",
+                        rollColor:"darkorange",
+                        borderColor:"#284335",
+                        corner:20
+                      });
 
-}
+var buttonHold=new Container(button.width, button.height)
+                  .center(containerEnd)
+                  .mov(0,40);
+        exitButton.center(buttonHold);
+                containerEnd.animate(
+                    {obj:{x:containerEnd.x+stage.width/2+containerEnd.width/2},
+                    time:1000,
+                    ease:"backOut"
+                });
+
+                buttonHold.on("click", function(e){
+                 
+                  // containerEnd.removeAllChildren();
+                  // page1.removeAllChildren();
+                  // page2.removeAllChildren();
+                  // page3.removeAllChildren();
+                  stage.removeAllChildren();
+                  stage.update();
+                   start();
+                  
+                });
+                stage.update();
+
+}//end of done
 
 
 
@@ -556,7 +594,11 @@ function riddlePrint(){
            stage.update();
           // introScreen.resize();
         });
-stage.update(); //of frame complete
+
+
+
+
+stage.update(); //of game
     }// end of game()
 
 
@@ -568,7 +610,7 @@ stage.update(); //of frame complete
 //         });
 
 
-
+}// end of start
     stage.update(); //of frame complete
 });// end of frame complete
 
