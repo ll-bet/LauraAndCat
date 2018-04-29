@@ -18,10 +18,10 @@
 <!-- use zimjs.com/distill for minified individual functions! -->
 
 <style>
-   /* @font-face {
-            font-family: Gugi;
-            src: url(assets/fonts/Gugi-Regular.ttf);
-        }*/
+    @font-face {
+            font-family: 'Gugi';
+            src: url(/assets/fonts/Gugi-Regular.ttf);
+        }
 </style>
 
 <script>
@@ -361,7 +361,8 @@ var catAnswerCont= new Container();
         //coin.removeFrom(page1Items);
        score++;
        if (score==3){
-        console.log("done");
+        //console.log("done");
+            done();
        }
         
         stage.update();
@@ -372,7 +373,24 @@ var catAnswerCont= new Container();
 
 //end of item check
 
+function done(){
 
+    rectW=400;
+    rectH=200;
+    var container = new Container(rectW, rectH).addTo(stage,0);
+     container.x=-rectW;
+    container.y=300;
+
+    var label = new Label({
+                    text:"Laura is free!",
+                    size:50,
+                    color:"black",
+                    font:"Cookies",
+                    align:"center"
+                }).center(rectangle).mov(0,-40);
+
+
+}
 
 
 
