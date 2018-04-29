@@ -19,7 +19,7 @@
 
 <style>
     @font-face {
-            font-family: 'Gugi', cursive;
+            font-family: 'Gugi';
             src: url(../assets/fonts/Gugi-Regular.ttf) format('truetype');
         }
 </style>
@@ -82,7 +82,7 @@ var girl=frame.asset('girl.png');//page1
 //~~ score
 
 var score=0;
-
+var startPan = 0;
 var music =frame.asset("BeepBox-Song.wav").play({loop:-1, volume:.5});
 var manager = new LayoutManager();
 var responseLabel;
@@ -436,6 +436,8 @@ var buttonHold=new Container(button.width, button.height)
                   // page1.removeAllChildren();
                   // page2.removeAllChildren();
                   // page3.removeAllChildren();
+                  startPan=0;
+                  music.pan = startPan;
                   stage.removeAllChildren();
                   stage.update();
                    start();
@@ -596,7 +598,7 @@ function riddlePrint(){
         ); // for button & container
 
           layoutStage.dispose();
-         layout.dispose();
+         //layout.dispose();
         // manager.add(layout);
         manager.add(layoutStage);
         // manager.add(layoutIntro);
